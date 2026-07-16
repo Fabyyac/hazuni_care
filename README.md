@@ -69,23 +69,43 @@ O backend e o frontend foram compilados com sucesso após as últimas alteraçõ
    - `VITE_API_URL` = `https://<seu-backend>/api/v1`
 5. O Vercel irá construir usando `npm run build` e publicar o frontend.
 
-### Backend na nuvem
+### Backend na nuvem gratuita
 O backend deve ser hospedado em um serviço separado, pois o Vercel serve apenas o frontend neste projeto.
 
-Recomendados gratuitos:
-- Railway (https://railway.app)
-- Render (https://render.com)
-- Neon (https://neon.tech)
-- Supabase (https://supabase.com)
+Se a Railway disser "Free plan resource creation has been exceeded", use Render com um banco gratuito como Supabase ou Neon.
+
+Opção totalmente gratuita recomendada:
+- Render (backend)
+- Supabase (PostgreSQL gratuito)
+
+Passos rápidos:
+1. Crie uma conta gratuita no Render e conecte seu GitHub.
+2. Importe o repositório `hazuni_care`.
+3. Configure o serviço como Web Service e use `backend` como Root Directory.
+4. Build Command: `npm install && npm run build`
+5. Start Command: `npm run start`
+6. Adicione as variáveis de ambiente do backend:
+   - `DATABASE_URL` = connection string do banco
+   - `DB_DIALECT=postgres`
+   - `JWT_SECRET` = sua chave secreta forte
+   - `JWT_EXPIRES_IN=24h`
+   - `FRONTEND_URL` = URL do frontend no Vercel
+7. Faça o deploy.
 
 ### Banco de dados gratuito
-O projeto foi ajustado para usar um banco na nuvem com PostgreSQL ou MySQL.
+O projeto usa PostgreSQL ou MySQL via URL de conexão.
 
-Use uma dessas opções gratuitas:
-- Neon (PostgreSQL grátis)
+Opções gratuitas recomendadas:
 - Supabase (PostgreSQL grátis)
-- Railway PostgreSQL
+- Neon (PostgreSQL grátis)
 - PlanetScale (MySQL grátis)
+
+Se usar Supabase:
+1. Crie uma conta em https://supabase.com/
+2. Crie um novo projeto gratuito.
+3. Copie a URL do banco em Settings > Database > Connection string.
+4. Defina `DATABASE_URL` no Render com essa URL.
+5. Defina `DB_DIALECT=postgres` no Render.
 
 ### Variáveis de ambiente do backend
 No serviço de backend, defina:
