@@ -87,6 +87,7 @@ Passos rápidos:
 6. Adicione as variáveis de ambiente do backend:
    - `DATABASE_URL` = connection string do banco
    - `DB_DIALECT=postgres`
+   - `DB_SSL=true`
    - `JWT_SECRET` = sua chave secreta forte
    - `JWT_EXPIRES_IN=24h`
    - `FRONTEND_URL` = URL do frontend no Vercel
