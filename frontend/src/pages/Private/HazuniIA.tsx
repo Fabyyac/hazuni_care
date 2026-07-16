@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Cabecalho from '../../components/Cabecalho';
 import ChatMensagem from '../../components/ChatMensagem';
-import { gerarResposta } from '../../services/respostas';
+import { api } from '../../services/api';
 import type { Mensagem } from '../../types/mensagem';
 
 export default function HazuniIA() {
@@ -52,24 +52,34 @@ export default function HazuniIA() {
 
         setDigitando(true);
 
-        // Simula tempo de resposta
-        setTimeout(() => {
+        api.post('/ia', { mensagem: texto })
+            .then((resposta) => {
+                const textoResposta = resposta.data?.resposta || 'Desculpe, não consegui responder agora. Tente novamente mais tarde.';
 
-            const resposta = gerarResposta(texto);
+                const mensagemIA: Mensagem = {
+                    tipo: 'assistente',
+                    texto: textoResposta
+                };
 
-            const mensagemIA: Mensagem = {
-                tipo: 'assistente',
-                texto: resposta
-            };
+                setConversa((antiga) => [
+                    ...antiga,
+                    mensagemIA
+                ]);
+            })
+            .catch(() => {
+                const mensagemIA: Mensagem = {
+                    tipo: 'assistente',
+                    texto: 'Desculpe, não consegui conectar com a Hazuni IA. Tente novamente em alguns instantes.'
+                };
 
-            setConversa((antiga) => [
-                ...antiga,
-                mensagemIA
-            ]);
-
-            setDigitando(false);
-
-        }, 900);
+                setConversa((antiga) => [
+                    ...antiga,
+                    mensagemIA
+                ]);
+            })
+            .finally(() => {
+                setDigitando(false);
+            });
 
     }
 
