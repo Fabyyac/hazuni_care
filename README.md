@@ -1,6 +1,6 @@
 # Hazuni Care
 
-Plataforma inteligente de assistência digital Hazuni Care. Este repositório contém a implementação atual do aplicativo web com backend e frontend, mantendo a identidade visual, logo e cores do projeto.
+Plataforma inteligente de assistência digital Hazuni Care. Este repositório contém a implementação atual do aplicativo web com backend e frontend, mantendo a identidade visual, logo e cores do projeto. Ainda em Desenvolvimento.
 
 ## 🚀 O que já foi implementado
 
