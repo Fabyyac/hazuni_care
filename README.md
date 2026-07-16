@@ -59,15 +59,61 @@ O backend e o frontend foram compilados com sucesso após as últimas alteraçõ
 - Backend: `npm run build:backend`
 - Frontend: `npm run build:frontend`
 
+## 🚀 Deploy
+
+### Frontend no Vercel
+1. Crie uma conta no Vercel e conecte seu GitHub.
+2. Importe o repositório `hazuni_care`.
+3. No projeto do Vercel, defina `Root Directory` como `frontend`.
+4. Configure a variável de ambiente do Vercel:
+   - `VITE_API_URL` = `https://<seu-backend>/api/v1`
+5. O Vercel irá construir usando `npm run build` e publicar o frontend.
+
+### Backend na nuvem
+O backend deve ser hospedado em um serviço separado, pois o Vercel serve apenas o frontend neste projeto.
+
+Recomendados gratuitos:
+- Railway (https://railway.app)
+- Render (https://render.com)
+- Neon (https://neon.tech)
+- Supabase (https://supabase.com)
+
+### Banco de dados gratuito
+O projeto foi ajustado para usar um banco na nuvem com PostgreSQL ou MySQL.
+
+Use uma dessas opções gratuitas:
+- Neon (PostgreSQL grátis)
+- Supabase (PostgreSQL grátis)
+- Railway PostgreSQL
+- PlanetScale (MySQL grátis)
+
+### Variáveis de ambiente do backend
+No serviço de backend, defina:
+- `DATABASE_URL` = URL do banco de dados na nuvem
+- `DB_DIALECT` = `postgres` ou `mysql`
+- `JWT_SECRET` = uma chave secreta forte
+- `JWT_EXPIRES_IN` = `24h`
+- `FRONTEND_URL` = URL do frontend no Vercel
+
+### Variáveis de ambiente do frontend
+No Vercel, defina:
+- `VITE_API_URL` = `https://<seu-backend>/api/v1`
+
+## 🌐 O que foi ajustado
+
+- `backend/src/config/database.ts` agora usa `DATABASE_URL` ou variáveis individuais.
+- `backend/src/server.ts` agora carrega `dotenv` e usa `PORT` e `FRONTEND_URL`.
+- `frontend/src/services/api.ts` agora usa `import.meta.env.VITE_API_URL`.
+- Adicionada `vercel.json` para definir `rootDirectory: "frontend"`.
+- Atualizada `.env.example` com `DATABASE_URL`, `DB_DIALECT` e `VITE_API_URL`.
+
 ## 🔜 Próximos passos
 
-- Integrar IA com OpenAI para respostas reais.
-- Adicionar upload de documentos e persistência em nuvem.
-- Criar painel administrativo.
-- Implementar mobile com React Native / Expo.
-- Adicionar testes unitários e e2e.
-- Configurar deploy automático no GitHub Actions.
+- Conectar o backend a um banco em nuvem gratuito.
+- Implantar o backend em Railway, Render ou serviço similar.
+- Definir `VITE_API_URL` no Vercel.
+- Testar o fluxo completo no ambiente de produção.
 
 ## 📌 Observação
 
-A identidade visual atual foi preservada e a `logo.png` não foi alterada. Se desejar, posso também ajudar a publicar este repositório no GitHub assim que você fornecer a URL ou criar o repositório para ser vinculado.
+A identidade visual atual foi preservada e a `logo.png` não foi alterada.
