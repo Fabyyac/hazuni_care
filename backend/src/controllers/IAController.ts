@@ -23,12 +23,12 @@ function gerarRespostaHazuniLocal(mensagem: string, nomeUsuario?: string): strin
 
 // Chamada à Gemini (Generative Language) com suporte a dois modos de autenticação
 async function callGemini(prompt: string): Promise<string> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const model = process.env.GEMINI_MODEL || 'gemini-pro';
+  const apiKey = process.env.GEMINI_API_KEY || process.env.KEY_GEMINI_API_KEY || process.env.KEY_GEMINI_API;
+  const model = process.env.GEMINI_MODEL || process.env.KEY_GEMINI_MODEL || 'gemini-pro';
   if (!apiKey) throw new Error('GEMINI_API_KEY não configurada');
 
-  // Se a variável GEMINI_USE_BEARER estiver 'true', usamos Authorization: Bearer
-  const useBearer = (process.env.GEMINI_USE_BEARER || 'false').toLowerCase() === 'true';
+  // Se a variável GEMINI_USE_BEARER estiver 'true' (ou KEY_GEMINI_USE_BEARER), usamos Authorization: Bearer
+  const useBearer = ((process.env.GEMINI_USE_BEARER || process.env.KEY_GEMINI_USE_BEARER || 'false').toString()).toLowerCase() === 'true';
 
   // Endpoint genérico para Generative Language API. Dependendo da chave, pode precisar ajustar URL.
   let url = `https://generativelanguage.googleapis.com/v1/models/${encodeURIComponent(model)}:generateText`;
@@ -84,7 +84,7 @@ export const conversar = async (req: Request, res: Response) => {
     return res.status(400).json({ status: 'erro', mensagem: 'A mensagem informada é inválida.' });
   }
 
-  const provider = (process.env.LLM_PROVIDER || 'local').toLowerCase();
+  const provider = (process.env.LLM_PROVIDER || process.env.KEY_LLM_PROVIDER || 'local').toLowerCase();
 
   try {
     if (provider === 'gemini') {
